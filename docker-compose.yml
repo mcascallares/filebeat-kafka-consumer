@@ -4,8 +4,6 @@ version: '2'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.1.0
-    hostname: zookeeper
-    container_name: zookeeper
     ports:
       - "2181:2181"
     environment:
@@ -14,8 +12,6 @@ services:
 
   broker:
     image: confluentinc/cp-kafka:6.1.0
-    hostname: broker
-    container_name: broker
     depends_on:
       - zookeeper
     ports:
@@ -31,8 +27,6 @@ services:
       
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.12.0
-    hostname: filebeat
-    container_name: filebeat
     depends_on:
       - broker
     volumes:
