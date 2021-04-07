@@ -7,7 +7,8 @@ WIP!
 
 ## Requirements
 
-- Docker
+- docker
+- docker-compose
 
 
 ## Running it
@@ -34,7 +35,7 @@ kafka-console-producer  \
 docker-compose logs -f filebeat
 ```
 
-4. Scale consumers in the same consumer group
+4. Scale consumers up in the same consumer group
 
 ```
 docker-compose up --scale filebeat=3
