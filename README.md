@@ -19,17 +19,7 @@ docker-compose up -d
 ```
 
 
-2. Create a sample topic
-
-```
-kafka-topics --create \
-    --bootstrap-server localhost:29092 \
-    --replication-factor 1 \
-    --partitions 2 \
-    --topic my-topic
-```
-
-3. Produce sample data
+2. Produce sample data
 
 ```
 kafka-console-producer  \
@@ -37,13 +27,15 @@ kafka-console-producer  \
     --topic my-topic 
 ```
 
-4. See consumed data in STDOUT
+
+3. See consumed data in STDOUT
 
 ```
 docker-compose logs -f filebeat
 ```
 
-5. Tear down
+
+4. Tear down
 ```
 docker-compose down -v
 ```
