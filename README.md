@@ -36,4 +36,16 @@ kafka-console-producer  \
     --bootstrap-server localhost:29092 \
     --topic my-topic 
 ```
+
+4. See consumed data in STDOUT
+
+```
+docker-compose logs -f filebeat
+```
+
+5. Tear down
+```
+docker-compose down -v
+```
+
     
