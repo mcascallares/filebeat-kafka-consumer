@@ -34,8 +34,13 @@ kafka-console-producer  \
 docker-compose logs -f filebeat
 ```
 
+4. Scale consumers in the same consumer group
 
-4. Tear down
+```
+docker-compose up --scale filebeat=3
+```
+
+5. Tear down
 ```
 docker-compose down -v
 ```
