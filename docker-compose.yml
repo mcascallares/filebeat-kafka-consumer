@@ -20,6 +20,8 @@ services:
       - zookeeper
     ports:
       - "29092:29092"
+    volumes:
+      - /var/lib/kafka/data
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -33,6 +35,6 @@ services:
     container_name: filebeat
     depends_on:
       - broker
-    volumes: 
+    volumes:
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
     
