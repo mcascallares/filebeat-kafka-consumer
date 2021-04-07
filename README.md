@@ -9,6 +9,7 @@ WIP!
 
 - docker
 - docker-compose
+- kafka-console-producer (to produce sample data only)
 
 
 ## Running it
