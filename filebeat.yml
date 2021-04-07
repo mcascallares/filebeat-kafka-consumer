@@ -1,0 +1,9 @@
+filebeat.inputs:
+- type: kafka
+  hosts:
+    - broker:9092
+  topics: ["my-topic"]
+  group_id: "filebeat"
+
+output.console:
+  pretty: true
