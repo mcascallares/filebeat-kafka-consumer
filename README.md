@@ -12,7 +12,7 @@ WIP!
 - kafka-console-producer (to produce sample data only)
 
 
-## Running it
+## Data in motion 💪
 
 1. Starting the environment
 
@@ -47,4 +47,5 @@ docker-compose up --scale filebeat=3
 docker-compose down -v
 ```
 
+![Screenshot](https://github.com/mcascallares/filebeat-kafka-consumer/raw/main/assets/images/screenshot.png)
     
