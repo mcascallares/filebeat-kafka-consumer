@@ -62,7 +62,14 @@ kafka-console-producer  \
 curl "localhost:9200/filebeat*/_search"
 ```
 
-7. Tear down
+7. Visualize data in kibana
+- In the browser, go to localhost:5601
+- Navigate `Manage` -> `Index patterns` -> `Create index pattern`
+- In the index pattern name, type `filebeat*` - those are the indices to which Filebeat writes as default - and proceed
+- Select `@timestamp` as the time field and create the index pattern
+- In the top-left menu, go to `Analytics` -> `Discover` to check your data for this index pattern
+
+8. Tear down
 ```
 docker-compose down -v
 ```
