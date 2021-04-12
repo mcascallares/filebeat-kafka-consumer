@@ -53,7 +53,7 @@ docker-compose up --scale filebeat-console=3
 ```
 kafka-console-producer  \
     --bootstrap-server localhost:29092 \
-    --topic my-topic
+    --topic my-topic-es
 ```
 
 6. See consumed data in Elasticsearch
