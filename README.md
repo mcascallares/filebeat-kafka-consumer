@@ -2,7 +2,7 @@
 
 This repo shows a quick example of HOWTO consume messages from Kafka using Filebeat as a consumer. It comprises:
 - A basic Kafka setup: Zookeeper, Broker.
-- A basic Elasticsearch single-node, non-protected cluster
+- A basic Elasticsearch single-node, non-protected cluster, and a Kibana instance connecting to it
 - Filebeat implementations
   - `filebeat-console` writing to STDOUT the messages received in the topic `my-topic`
   - `filebeat-es` writing to Elasticsearch the messages received in the topic `my-topic-es`
