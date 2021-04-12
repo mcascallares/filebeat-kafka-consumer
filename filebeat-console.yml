@@ -3,7 +3,7 @@ filebeat.inputs:
   hosts:
     - broker:9092
   topics: ["my-topic"]
-  group_id: "filebeat"
+  group_id: "filebeat-console"
 
 output.console:
   codec.format:

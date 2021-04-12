@@ -1,0 +1,9 @@
+filebeat.inputs:
+- type: kafka
+  hosts:
+    - broker:9092
+  topics: ["my-topic-es"]
+  group_id: "filebeat-es"
+
+output.elasticsearch:
+  hosts: ["http://es01:9200"]
