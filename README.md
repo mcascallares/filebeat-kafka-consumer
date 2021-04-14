@@ -34,6 +34,7 @@ kafka-console-producer  \
     --topic my-topic
 ```
 
+![Screenshot](https://github.com/mcascallares/filebeat-kafka-consumer/raw/main/assets/images/screenshot.png)
 
 3. See consumed data in STDOUT
 
@@ -64,5 +65,3 @@ curl "localhost:9200/filebeat*/_search"
 ```
 docker-compose down -v
 ```
-
-![Screenshot](https://github.com/mcascallares/filebeat-kafka-consumer/raw/main/assets/images/screenshot.png)
