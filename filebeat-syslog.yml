@@ -1,0 +1,10 @@
+filebeat.inputs:
+- type: syslog
+  protocol.tcp:
+    host: "0.0.0.0:9000"
+
+output.console:
+  codec.format:
+    string: '%{[message]}'
+
+
