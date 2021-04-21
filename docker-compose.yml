@@ -10,27 +10,31 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
-  broker:
+  kafka:
     image: confluentinc/cp-server:6.1.0
     depends_on:
       - zookeeper
+    hostname: kafka
     ports:
       - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    labels:
-      - co.elastic.logs/module=kafka
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://localhost:9000"
+        tag: "kafka"
 
   filebeat-console:
     image: docker.elastic.co/beats/filebeat-oss:7.12.0
     user: root
     command: ["--strict.perms=false"]
     depends_on:
-      - broker
+      - kafka
     volumes:
       - ./filebeat-console.yml:/usr/share/filebeat/filebeat.yml:ro
 
@@ -39,21 +43,19 @@ services:
     user: root
     command: ["--strict.perms=false"]
     depends_on:
-      - broker
+      - kafka
       - elasticsearch
     volumes:
       - ./filebeat-es.yml:/usr/share/filebeat/filebeat.yml:ro
 
-  filebeat-docker:
+  filebeat-syslog:
     image: docker.elastic.co/beats/filebeat-oss:7.12.0
     user: root
     command: ["--strict.perms=false"]
-    depends_on:
-      - elasticsearch
     volumes:
-      - ./filebeat-docker.yml:/usr/share/filebeat/filebeat.yml:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./filebeat-syslog.yml:/usr/share/filebeat/filebeat.yml:ro
+    ports:
+      - 9000:9000
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
