@@ -1,9 +1,9 @@
 ---
-version: '2'
+version: '3.3'
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.1.0
+    image: confluentinc/cp-zookeeper:6.1.1
     ports:
       - "2181:2181"
     environment:
@@ -11,54 +11,24 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: confluentinc/cp-server:6.1.0
-    depends_on:
-      - zookeeper
-    hostname: kafka
+    image: confluentinc/cp-server:6.1.1
     ports:
       - "29092:29092"
+    depends_on:
+      - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "tcp://localhost:9000"
-        tag: "kafka"
-
-  filebeat-console:
-    image: docker.elastic.co/beats/filebeat-oss:7.12.0
-    user: root
-    command: ["--strict.perms=false"]
-    depends_on:
-      - kafka
-    volumes:
-      - ./filebeat-console.yml:/usr/share/filebeat/filebeat.yml:ro
-
-  filebeat-es:
-    image: docker.elastic.co/beats/filebeat-oss:7.12.0
-    user: root
-    command: ["--strict.perms=false"]
-    depends_on:
-      - kafka
-      - elasticsearch
-    volumes:
-      - ./filebeat-es.yml:/usr/share/filebeat/filebeat.yml:ro
-
-  filebeat-syslog:
-    image: docker.elastic.co/beats/filebeat-oss:7.12.0
-    user: root
-    command: ["--strict.perms=false"]
-    volumes:
-      - ./filebeat-syslog.yml:/usr/share/filebeat/filebeat.yml:ro
-    ports:
-      - 9000:9000
-
+    labels:
+      - co.elastic.logs/module=kafka
+  
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    ports:
+      - 9200:9200
     environment:
       - node.name=elasticsearch
       - cluster.initial_master_nodes=elasticsearch
@@ -68,11 +38,9 @@ services:
       memlock:
         soft: -1
         hard: -1
-    ports:
-      - 9200:9200
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.12.0
+    image: docker.elastic.co/kibana/kibana:7.12.1
     ports:
       - 5601:5601
     environment:
